@@ -1,0 +1,16 @@
+# Báo cáo Word & tài liệu tạm
+*.docx
+~$*.docx
+
+# Thư mục tạm & cơ sở dữ liệu runtime cục bộ
+.local/
+database/*.sqlite
+database/*.sqlite3
+database/*.db
+*.log
+
+# Hệ điều hành & IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

@@ -1,0 +1,274 @@
+/* ==========================================================================
+   NEXTGEN UI/UX SUITE — Sparklines, Vietnam Map, Slide-Over Drawer,
+   Kanban Drag & Drop, Command Palette, Confetti & Live Toast
+   ========================================================================== */
+
+/* 1. KPI Sparkline & Trend Badge */
+.kpi-spark-wrap {
+    margin-top: 8px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 8px;
+}
+.kpi-trend-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    padding: 2px 7px;
+    border-radius: 999px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.22);
+    color: #fff;
+    backdrop-filter: blur(4px);
+    white-space: nowrap;
+}
+.kpi-spark-svg {
+    width: 92px;
+    height: 28px;
+    overflow: visible;
+    flex-shrink: 0;
+}
+.kpi-spark-line {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.92);
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 200;
+    stroke-dashoffset: 200;
+    animation: nxDrawLine 1.2s ease forwards;
+}
+.kpi-spark-area {
+    fill: rgba(255, 255, 255, 0.2);
+}
+@keyframes nxDrawLine {
+    to { stroke-dashoffset: 0; }
+}
+
+/* 2. Vietnam SVG Animated Transfer Network Map */
+.vn-map-card-body {
+    position: relative;
+    padding: 12px 14px;
+    background: linear-gradient(160deg, rgba(99, 102, 241, 0.08), rgba(6, 182, 212, 0.08));
+    border-radius: 14px;
+    overflow: hidden;
+}
+[data-bs-theme="dark"] .vn-map-card-body {
+    background: linear-gradient(160deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.95));
+}
+.vn-hub-pill {
+    cursor: pointer;
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s;
+}
+.vn-hub-pill:hover {
+    transform: translateY(-2px) scale(1.03);
+}
+.vn-hub-pill.active {
+    outline: 2px solid var(--v2, #ec4899);
+    outline-offset: 2px;
+}
+
+/* 3. Slide-Over Detail Drawer */
+.nx-drawer-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.45);
+    backdrop-filter: blur(4px);
+    z-index: 1075;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+.nx-drawer-backdrop.open {
+    opacity: 1;
+    visibility: visible;
+}
+.nx-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: min(760px, 94vw);
+    background: #ffffff;
+    z-index: 1080;
+    box-shadow: -16px 0 48px rgba(15, 23, 42, 0.22);
+    transform: translateX(100%);
+    transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+    display: flex;
+    flex-direction: column;
+}
+.nx-drawer.open {
+    transform: translateX(0);
+}
+[data-bs-theme="dark"] .nx-drawer {
+    background: #1a2236;
+    color: #f1f5f9;
+    border-left: 1px solid rgba(148, 163, 184, 0.2);
+}
+.nx-drawer-header {
+    padding: 14px 20px;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.08));
+}
+.nx-drawer-body {
+    padding: 18px 20px;
+    overflow-y: auto;
+    flex: 1 1 auto;
+}
+
+/* 4. Kanban Board View (Table <-> Kanban) */
+.nx-kanban-board {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 14px;
+    padding: 16px;
+}
+.nx-kanban-col {
+    background: rgba(248, 250, 252, 0.9);
+    border: 1px solid rgba(203, 213, 225, 0.7);
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    min-height: 360px;
+    max-height: 640px;
+    transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+[data-bs-theme="dark"] .nx-kanban-col {
+    background: rgba(21, 28, 46, 0.92);
+    border-color: rgba(148, 163, 184, 0.18);
+}
+.nx-kanban-col.nx-drag-over {
+    border-color: var(--v2, #ec4899) !important;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--v2, #ec4899) 25%, transparent);
+    background: color-mix(in srgb, var(--v1, #6366f1) 8%, transparent);
+}
+.nx-kanban-col-head {
+    padding: 10px 14px;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.18);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 700;
+    font-size: 0.78rem;
+}
+.nx-kanban-cards {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: auto;
+    flex: 1 1 auto;
+}
+.nx-kanban-card {
+    background: #ffffff;
+    border: 1px solid rgba(203, 213, 225, 0.75);
+    border-radius: 12px;
+    padding: 11px 12px;
+    cursor: grab;
+    box-shadow: 0 4px 12px -6px rgba(15, 23, 42, 0.12);
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s;
+}
+.nx-kanban-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 22px -8px rgba(99, 102, 241, 0.25);
+}
+.nx-kanban-card.nx-dragging {
+    opacity: 0.5;
+    transform: scale(0.97);
+}
+[data-bs-theme="dark"] .nx-kanban-card {
+    background: #232c47;
+    border-color: rgba(148, 163, 184, 0.2);
+    color: #f1f5f9;
+}
+
+/* 5. Bin Drag & Drop Highlight */
+.bin-card[draggable="true"] {
+    cursor: grab;
+}
+.bin-card.nx-dragging {
+    opacity: 0.5;
+    transform: scale(0.96);
+}
+.bin-card.nx-drop-target {
+    outline: 2px dashed var(--v2, #ec4899) !important;
+    outline-offset: 2px;
+    transform: scale(1.03);
+}
+
+/* 6. Smart Command Palette Chips */
+.nx-cmd-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 8px 16px;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.18);
+    background: rgba(99, 102, 241, 0.05);
+}
+.nx-cmd-chip {
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    background: rgba(99, 102, 241, 0.1);
+    color: var(--v1, #4f46e5);
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+.nx-cmd-chip:hover {
+    background: linear-gradient(135deg, var(--v1, #6366f1), var(--v2, #ec4899));
+    color: #fff;
+    border-color: transparent;
+}
+[data-bs-theme="dark"] .nx-cmd-chip {
+    color: #c7d2fe;
+    background: rgba(129, 140, 248, 0.16);
+}
+
+/* 7. Confetti & Live Toast Stack */
+#nxConfettiCanvas {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 9999;
+}
+.nx-toast-stack {
+    position: fixed;
+    top: 74px;
+    right: 22px;
+    z-index: 1095;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    pointer-events: none;
+}
+.nx-toast {
+    pointer-events: auto;
+    min-width: 260px;
+    max-width: 360px;
+    padding: 11px 15px;
+    border-radius: 13px;
+    background: rgba(15, 23, 42, 0.93);
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 600;
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.28);
+    border-left: 4px solid #10b981;
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    animation: nxToastIn 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes nxToastIn {
+    from { opacity: 0; transform: translateX(30px) scale(0.95); }
+    to { opacity: 1; transform: none; }
+}
